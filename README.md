@@ -40,6 +40,24 @@ The agent (`recipe_agent.py`) answers cooking questions from a fixed collection 
   improved prompt separates *offered* follow-ups from *asserted* content and
   stops treating unverifiability as evidence of fabrication.
 
+### Bonus: synthetic dataset (Q7)
+
+- **58 of 75 synthetic responses judged "bad" = 77.3%** (vs 45% on the 20
+  hand-crafted scenarios with the same judge).
+- **Failure patterns differ**: the manual set failed on my deliberate traps
+  (substitution advice, dietary contradictions); the synthetic set fails mostly
+  because the agent **bypasses its tools** — 68% of synthetic runs have
+  <400 input tokens (no tool results in context) vs 40% on the manual set, and
+  tool-less runs are the judged-bad ones (median 235 vs 694 input tokens).
+  The agent answers "What ingredients are in X?" from general knowledge with
+  "typically …" hedges instead of searching.
+- All 15 substitution-type synthetic questions were judged bad (100%) — the
+  collection never covers substitutions, so this failure mode generalizes.
+- New failure types only the synthetic data revealed: hedged answers that sound
+  reasonable but silently drop collection facts (pizza "475–500°F + pizza stone"
+  instead of the recipe's exact 475°F / 12–15 min), and comparisons against
+  dishes outside the collection (butter chicken).
+
 ## Setup
 
 ```bash
